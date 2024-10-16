@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic List and Gallery</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    // ItemList Component
+    function ItemList({ items }) {
+      return (
+        <div>
+          {items.length === 0 ? (
+            <p>No items found</p>
+          ) : (
+            <ul>
+              {items.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      );
+    }
+
+    const rootElement = document.getElementById('root');
+    const testItems = ['Apple', 'Banana', 'Cherry'];  
+    ReactDOM.render(<ItemList items={testItems} />, rootElement);
+
+    // Gallery Component
+    function Gallery({ children }) {
+      const galleryStyle = {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+        gap: '10px',
+      };
+      return <div style={galleryStyle}>{children}</div>;
+    }
+
+    function Image({ src }) {
+      return <img src={src} alt="gallery image" style={{ width: '100%', height: 'auto' }} />;
+    }
+
+    const galleryImages = (
+      <Gallery>
+        <Image src="https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=" />
+        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ_2oII-AssPFNOvcLQ6ecJ6ZWQlUbKU3j8w&s" />
+        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUPIfiGgUML8G3ZqsNLHfaCnZK3I5g4tJabQ&s" />
+      </Gallery>
+    );
+
+    ReactDOM.render(galleryImages, document.getElementById('root'));
+
+  </script>
+</body>
+</html>
